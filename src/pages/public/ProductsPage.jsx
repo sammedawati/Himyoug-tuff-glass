@@ -12,8 +12,7 @@ const ProductsPage = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [searchQuery] = useState('');
+
     const [pageContent, setPageContent] = useState({
         title: 'Industrial Asset Registry',
         subtitle: 'Exploring high-performance structural glass solutions engineered for institutional excellence.',
@@ -36,18 +35,8 @@ const ProductsPage = () => {
             if (doc.exists()) {
                 const fetchedCategories = doc.data().items || [];
                 setCategories(fetchedCategories);
-                // If a URL category is present, try to set it as selected
                 if (urlCategory) {
-                    const decodedCat = decodeURIComponent(urlCategory);
-                    const foundCat = fetchedCategories.find(cat => cat.name.toLowerCase() === decodedCat.toLowerCase());
-                    if (foundCat) {
-                        setSelectedCategory(foundCat.name);
-                    } else {
-                        setSelectedCategory(null); // Or a default if not found
-                    }
-                } else {
-                    // Default to the first category or 'All Assets' if no URL category
-                    setSelectedCategory(fetchedCategories.length > 0 ? fetchedCategories[0].name : null);
+                    // Logic for URL category if needed, but setters removed
                 }
             }
         });
@@ -238,8 +227,8 @@ const ProductsPage = () => {
                                 key={item.id}
                                 onClick={() => navigate(`/products/${encodeURIComponent(item.name)}`)}
                                 className={`group relative h-[24rem] rounded-[3rem] overflow-hidden cursor-pointer border-[3px] transition-all duration-700 ${urlCategory === item.name
-                                        ? 'border-brand-600 shadow-[0_50px_100px_-20px_rgba(37,99,235,0.3)]'
-                                        : 'border-white shadow-2xl hover:border-brand-600/30'
+                                    ? 'border-brand-600 shadow-[0_50px_100px_-20px_rgba(37,99,235,0.3)]'
+                                    : 'border-white shadow-2xl hover:border-brand-600/30'
                                     }`}
                             >
                                 <img src={item.image} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" alt={item.name} />
