@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaBox, FaEnvelope, FaSignOutAlt, FaImages, FaCalendarAlt, FaCogs, FaInfoCircle, FaIndustry, FaExternalLinkAlt, FaSearch } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { db } from '../../services/firebase';
 import { collection, query, onSnapshot, orderBy } from 'firebase/firestore';
 import ProductManager from '../../components/admin/ProductManager';
@@ -64,7 +64,7 @@ const AdminDashboard = () => {
                 <nav className="mt-4 flex-1 space-y-1 px-3 overflow-y-auto custom-scrollbar">
                     <div className="px-4 text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mb-3 mt-4">Command Center</div>
                     <SidebarItem icon={<FaEnvelope />} label="Inquiries" id="inquiries" active={activeTab} set={setActiveTab} />
-                    
+
                     <div className="px-4 text-[10px] font-black text-gray-500 uppercase tracking-[0.3em] mb-3 mt-4">Site Management</div>
                     <SidebarItem icon={<FaHome />} label="Home" id="home" active={activeTab} set={setActiveTab} />
                     <SidebarItem icon={<FaInfoCircle />} label="About" id="about" active={activeTab} set={setActiveTab} />
@@ -102,13 +102,12 @@ const AdminDashboard = () => {
 };
 
 const SidebarItem = ({ icon, label, id, active, set }) => (
-    <button 
+    <button
         onClick={() => set(id)}
-        className={`w-full text-left px-4 py-2.5 rounded-xl flex items-center space-x-3 transition-all duration-300 group ${
-            active === id 
-                ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/20' 
+        className={`w-full text-left px-4 py-2.5 rounded-xl flex items-center space-x-3 transition-all duration-300 group ${active === id
+                ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/20'
                 : 'text-gray-400 hover:bg-white/5 hover:text-white'
-        }`}
+            }`}
     >
         <div className={`text-sm transition-transform duration-500 group-hover:rotate-12 ${active === id ? 'text-white' : 'text-gray-500 group-hover:text-brand-400'}`}>
             {icon}
@@ -142,9 +141,9 @@ const InquiriesModule = () => {
 
     const filteredInquiries = data.filter(item => {
         const matchesDate = !filterDate || item.date.toISOString().split('T')[0] === filterDate;
-        const matchesSearch = !searchTerm || 
-            item.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-            item.email?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        const matchesSearch = !searchTerm ||
+            item.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             item.message?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesType = activeType === 'All' || item.type === activeType.toLowerCase() + '_inquiry';
         return matchesDate && matchesSearch && matchesType;
@@ -158,7 +157,7 @@ const InquiriesModule = () => {
     );
 
     return (
-        <motion.div 
+        <motion.div
             variants={staggerContainer}
             initial="initial"
             animate="animate"
@@ -169,14 +168,14 @@ const InquiriesModule = () => {
                     <motion.h2 variants={fadeInUp} className="text-4xl font-black text-gray-900 tracking-tight uppercase">Intelligence Feed</motion.h2>
                     <motion.p variants={fadeInUp} className="text-gray-500 font-medium tracking-tight uppercase text-[10px]">Strategic monitoring of commercial and technical transmissions.</motion.p>
                 </div>
-                
+
                 <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-3 w-full lg:w-auto">
                     {/* Search Node */}
                     <div className="bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-100 flex items-center gap-3 flex-1 lg:flex-initial min-w-[280px]">
                         <FaSearch className="text-slate-300 text-xs" />
-                        <input 
-                            type="text" 
-                            placeholder="SEARCH STAKEHOLDERS..." 
+                        <input
+                            type="text"
+                            placeholder="SEARCH STAKEHOLDERS..."
                             className="bg-transparent border-none text-[10px] font-black p-0 focus:ring-0 w-full placeholder:text-slate-300 uppercase"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -186,9 +185,9 @@ const InquiriesModule = () => {
                     {/* Date Logic */}
                     <div className="bg-white px-4 py-2 rounded-xl shadow-sm border border-gray-100 flex items-center gap-2">
                         <span className="text-[8px] font-black uppercase tracking-[0.2em] text-slate-400">Log Date</span>
-                        <input 
-                            type="date" 
-                            className="bg-transparent border-none text-[10px] font-black p-0 focus:ring-0 cursor-pointer uppercase" 
+                        <input
+                            type="date"
+                            className="bg-transparent border-none text-[10px] font-black p-0 focus:ring-0 cursor-pointer uppercase"
                             value={filterDate}
                             onChange={(e) => setFilterDate(e.target.value)}
                         />
@@ -207,11 +206,10 @@ const InquiriesModule = () => {
                     <button
                         key={t}
                         onClick={() => setActiveType(t)}
-                        className={`px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all border ${
-                            activeType === t 
-                                ? 'bg-slate-900 text-cyan-400 border-slate-900 shadow-lg' 
+                        className={`px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all border ${activeType === t
+                                ? 'bg-slate-900 text-cyan-400 border-slate-900 shadow-lg'
                                 : 'bg-white text-slate-400 border-gray-100 hover:border-slate-300'
-                        }`}
+                            }`}
                     >
                         {t}
                     </button>
@@ -232,7 +230,7 @@ const InquiriesModule = () => {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-50/50">
                             {filteredInquiries.length > 0 ? filteredInquiries.map((item, idx) => (
-                                <motion.tr 
+                                <motion.tr
                                     key={item.id}
                                     className={idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}
                                     whileHover={{ backgroundColor: 'rgba(225, 230, 236, 0.4)' }}

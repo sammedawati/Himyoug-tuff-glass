@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { motion } from 'framer-motion';
-import { fadeInUp, staggerContainer, pageTransition } from '../../utils/animations';
+import { pageTransition } from '../../utils/animations';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation, FreeMode } from 'swiper/modules';
+import { Autoplay, FreeMode } from 'swiper/modules';
 import { Link } from 'react-router-dom';
-import { FaArrowRight, FaCogs, FaShieldAlt, FaLightbulb, FaIndustry, FaGlobe, FaChevronRight, FaPlay, FaMicrochip, FaQuoteLeft } from 'react-icons/fa';
+import { FaArrowRight, FaCogs, FaShieldAlt, FaIndustry, FaGlobe, FaChevronRight, FaMicrochip, FaQuoteLeft } from 'react-icons/fa';
 import { dummyClients, homeStats, homeFeatures, homeShowcase, dummyTestimonials } from '../../utils/dummyData';
 import { useFadeIn, useStaggerFadeIn, useParallax } from '../../hooks/useGsap';
 
@@ -16,7 +16,7 @@ import 'swiper/css/navigation';
 
 const HomePage = () => {
     const heroParallaxRef = useParallax(30);
-    
+
     const [homeHero, setHomeHero] = useState({
         badge: 'Excellence in Glass Manufacturing',
         title: 'Structural Glass Intelligence.',
@@ -103,7 +103,7 @@ const HomePage = () => {
     }, []);
 
     return (
-        <motion.div 
+        <motion.div
             variants={pageTransition}
             initial="initial"
             animate="animate"
@@ -116,7 +116,7 @@ const HomePage = () => {
                     <img src={homeHero.bgImage} className="w-full h-full object-cover scale-110 opacity-60 grayscale-[0.2]" alt="Hero" />
                     <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
                 </div>
-                
+
                 <div className="absolute inset-0 z-[1] pointer-events-none opacity-20" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '30px 30px' }}></div>
 
                 <div className="container mx-auto px-6 relative z-10 pt-20">
@@ -130,7 +130,7 @@ const HomePage = () => {
                         <p className="text-base md:text-lg text-gray-300 max-w-3xl mb-12 font-medium leading-relaxed opacity-80 uppercase tracking-widest">
                             {homeHero.subtitle}
                         </p>
-                        
+
                         <div className="flex flex-wrap justify-center gap-8 mt-4 mb-10">
                             <Link to="/products" className="group bg-brand-600 hover:bg-brand-700 text-white px-10 py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-xs transition-all shadow-2xl flex items-center gap-4 active:scale-95">
                                 Explore Inventory <FaArrowRight className="group-hover:translate-x-2 transition-transform" />
@@ -153,13 +153,13 @@ const HomePage = () => {
                 <div className="container mx-auto px-6 relative z-10">
                     <div ref={statsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {stats.map((stat, i) => (
-                            <div 
+                            <div
                                 key={i}
                                 className="relative group bg-white/5 border border-white/10 backdrop-blur-xl p-8 rounded-[2rem] text-center hover:bg-brand-600/10 hover:border-brand-500/50 transition-all duration-500"
                             >
                                 <div className="text-3xl md:text-4xl font-black text-white mb-2 tracking-tighter group-hover:text-brand-500 transition-colors duration-500">{stat.value}</div>
                                 <div className="text-[9px] font-black text-brand-500 uppercase tracking-[0.3em] mb-1">{stat.label}</div>
-                                <div className="absolute top-4 right-6 text-white/5 text-3xl font-black italic select-none group-hover:text-brand-500/10 transition-colors">0{i+1}</div>
+                                <div className="absolute top-4 right-6 text-white/5 text-3xl font-black italic select-none group-hover:text-brand-500/10 transition-colors">0{i + 1}</div>
                             </div>
                         ))}
                     </div>
@@ -170,7 +170,7 @@ const HomePage = () => {
             <section className="py-20 bg-white relative overflow-hidden">
                 {/* Technical Grid Pattern */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)', backgroundSize: '80px 80px' }}></div>
-                
+
                 <div className="container mx-auto px-6 relative z-10">
                     <div ref={competenciesHeaderRef} className="max-w-4xl mx-auto text-center mb-12">
                         <div className="inline-block bg-blue-100 text-blue-700 px-5 py-2 rounded-full text-[8px] font-black uppercase tracking-[0.4em] mb-6 border border-blue-200">
@@ -190,15 +190,15 @@ const HomePage = () => {
                     </div>
 
                     <div ref={featuresRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                         {features.map((feature, i) => {
+                        {features.map((feature, i) => {
                             const icons = [<FaCogs />, <FaMicrochip />, <FaShieldAlt />, <FaIndustry />];
                             return (
-                                <div 
+                                <div
                                     key={i}
                                     className="bg-blue-100/60 p-8 rounded-[2.5rem] group hover:bg-blue-700 transition-all duration-700 hover:-translate-y-2 shadow-xl border border-blue-200/50 flex flex-col items-center text-center relative overflow-hidden"
                                 >
                                     <div className="absolute bottom-0 right-0 p-6 text-7xl font-black text-blue-900/5 group-hover:text-white/5 transition-colors select-none">
-                                        0{i+1}
+                                        0{i + 1}
                                     </div>
                                     <div className="w-16 h-16 bg-white shadow-2xl text-blue-600 rounded-[1.5rem] flex items-center justify-center text-3xl mb-6 group-hover:scale-110 group-hover:bg-white/10 group-hover:text-white transition-all duration-700 group-hover:rotate-[360deg]">
                                         {icons[i % icons.length]}
@@ -210,7 +210,7 @@ const HomePage = () => {
                         })}
                     </div>
                 </div>
-                
+
                 <div className="absolute top-1/2 left-0 -translate-y-1/2 text-[15vw] font-black text-gray-100/50 pointer-events-none select-none tracking-tighter uppercase whitespace-nowrap z-0">
                     PRECISION
                 </div>
@@ -218,12 +218,12 @@ const HomePage = () => {
 
             <section className="py-12 bg-gray-950 text-white">
                 <div className="text-center max-w-4xl mx-auto mb-8 px-6">
-                        <div className="inline-block bg-brand-500/10 text-brand-500 px-5 py-2 rounded-full text-[8px] font-black uppercase tracking-[0.4em] mb-4 border border-brand-500/20">{showcase.badge}</div>
-                        <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter italic">{showcase.title.split(' ').slice(0, -1).join(' ')} <span className="text-brand-500 NOT-ITALIC">{showcase.title.split(' ').slice(-1)}</span></h2>
+                    <div className="inline-block bg-brand-500/10 text-brand-500 px-5 py-2 rounded-full text-[8px] font-black uppercase tracking-[0.4em] mb-4 border border-brand-500/20">{showcase.badge}</div>
+                    <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter italic">{showcase.title.split(' ').slice(0, -1).join(' ')} <span className="text-brand-500 NOT-ITALIC">{showcase.title.split(' ').slice(-1)}</span></h2>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 max-w-[1500px] mx-auto">
-                     {showcase.items.map((item, i) => (
+                    {showcase.items.map((item, i) => (
                         <div key={i} className="group relative rounded-[2rem] overflow-hidden bg-white/5 border border-white/10 aspect-[4/3] shadow-2xl">
                             <img src={item.imageUrl || item.url} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110 opacity-60 group-hover:opacity-100" alt={item.title} />
                             <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-gray-950 via-gray-950/60 to-transparent">
@@ -246,19 +246,19 @@ const HomePage = () => {
                 {/* Technical Substrate Pattern */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#2563eb 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
-                
+
                 {/* Cinematic Ambient Glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-100/20 blur-[100px] rounded-full"></div>
 
                 <div className="container mx-auto px-6 relative z-10">
                     <div ref={clientsHeaderRef} className="flex flex-col items-center text-center mb-12">
-                        <div 
+                        <div
                             className="flex items-center gap-3 bg-blue-50 border border-blue-100 px-4 py-2 rounded-full mb-4"
                         >
                             <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse shadow-[0_0_10px_rgba(37,99,235,0.5)]"></div>
                             <span className="text-[9px] font-black text-blue-800 uppercase tracking-[0.4em]">Industrial Alliance Network</span>
                         </div>
-                        
+
                         <h2 className="text-3xl md:text-4xl font-black text-gray-900 uppercase tracking-tighter italic leading-none">
                             Trusted by <span className="text-blue-600 NOT-ITALIC">Commanders.</span>
                         </h2>
@@ -287,22 +287,22 @@ const HomePage = () => {
                         >
                             {(displayClients || []).map((client, idx) => (
                                 <SwiperSlide key={client.id || idx} className="h-auto">
-                                    <div 
+                                    <div
                                         className="relative group h-32"
                                     >
                                         {/* The Glass Pod Container */}
                                         <div className="h-full bg-white border border-gray-100 rounded-[2rem] p-6 flex items-center justify-center transition-all duration-700 group-hover:border-blue-500/30 group-hover:shadow-[0_40px_80px_-20px_rgba(37,99,235,0.12)] group-hover:bg-blue-50/50 relative overflow-hidden">
-                                             {/* Inner Glow Effect */}
+                                            {/* Inner Glow Effect */}
                                             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                            
-                                            <img 
-                                                src={client.logo} 
-                                                alt={client.name} 
-                                                className="h-10 md:h-12 w-full object-contain transition-all duration-700 transform group-hover:scale-110" 
+
+                                            <img
+                                                src={client.logo}
+                                                alt={client.name}
+                                                className="h-10 md:h-12 w-full object-contain transition-all duration-700 transform group-hover:scale-110"
                                                 onError={(e) => { e.target.src = `https://ui-avatars.com/api/?name=${client.name}&background=0284c7&color=fff&size=256`; }}
                                             />
                                         </div>
-                                        
+
 
                                     </div>
                                 </SwiperSlide>
@@ -349,7 +349,7 @@ const HomePage = () => {
                         {displayTestimonials.map((t, i) => (
                             <SwiperSlide key={t.id || i}>
                                 <div className="bg-blue-50/50 border border-blue-100/60 p-6 rounded-[2rem] h-full flex flex-col justify-between group hover:bg-blue-700 transition-all duration-700 shadow-lg hover:shadow-blue-900/20 relative overflow-hidden">
-                                     <div className="absolute top-6 right-6 text-3xl font-black text-blue-900/5 group-hover:text-white/5 transition-colors select-none">
+                                    <div className="absolute top-6 right-6 text-3xl font-black text-blue-900/5 group-hover:text-white/5 transition-colors select-none">
                                         <FaQuoteLeft />
                                     </div>
                                     <p className="text-sm font-bold text-gray-700 italic leading-relaxed group-hover:text-white/90 relative z-10">"{t.content || t.text || t.quote}"</p>

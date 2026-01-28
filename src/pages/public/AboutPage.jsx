@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { motion } from 'framer-motion';
-import { fadeInUp, staggerContainer, pageTransition } from '../../utils/animations';
+import { pageTransition } from '../../utils/animations';
 import { FaUserShield, FaCompass, FaLightbulb, FaHistory, FaGem, FaCheckDouble, FaAward, FaIndustry, FaShieldAlt, FaMicrochip, FaGlobe } from 'react-icons/fa';
 import { useFadeIn, useStaggerFadeIn, useParallax } from '../../hooks/useGsap';
 
@@ -68,38 +68,38 @@ const AboutPage = () => {
     }, []);
 
     const values = [
-        { 
-            icon: IconRegistry[content.values?.[0]?.icon] || <FaGem />, 
-            title: content.values?.[0]?.title || 'Optical Clarity', 
-            desc: content.values?.[0]?.desc || 'Utilizing low-iron technology and advanced de-ionized washing systems to ensure zero distortion and 99% light transmission.', 
-            color: 'from-blue-500/10 to-transparent', 
+        {
+            icon: IconRegistry[content.values?.[0]?.icon] || <FaGem />,
+            title: content.values?.[0]?.title || 'Optical Clarity',
+            desc: content.values?.[0]?.desc || 'Utilizing low-iron technology and advanced de-ionized washing systems to ensure zero distortion and 99% light transmission.',
+            color: 'from-blue-500/10 to-transparent',
             iconColor: 'text-blue-600'
         },
-        { 
-            icon: IconRegistry[content.values?.[1]?.icon] || <FaHistory />, 
-            title: content.values?.[1]?.title || 'Thermal Resistance', 
-            desc: content.values?.[1]?.desc || 'Engineered for extreme performance, our glass reduces solar heat gain by 60% without compromising natural aesthetics.', 
-            color: 'from-indigo-500/10 to-transparent', 
+        {
+            icon: IconRegistry[content.values?.[1]?.icon] || <FaHistory />,
+            title: content.values?.[1]?.title || 'Thermal Resistance',
+            desc: content.values?.[1]?.desc || 'Engineered for extreme performance, our glass reduces solar heat gain by 60% without compromising natural aesthetics.',
+            color: 'from-indigo-500/10 to-transparent',
             iconColor: 'text-indigo-600'
         },
-        { 
-            icon: IconRegistry[content.values?.[2]?.icon] || <FaUserShield />, 
-            title: content.values?.[2]?.title || 'Structural Integrity', 
-            desc: content.values?.[2]?.desc || 'Every toughened sheet is tested for surface compression and break patterns to exceed BIS and ASTM safety standards.', 
-            color: 'from-blue-600/10 to-transparent', 
+        {
+            icon: IconRegistry[content.values?.[2]?.icon] || <FaUserShield />,
+            title: content.values?.[2]?.title || 'Structural Integrity',
+            desc: content.values?.[2]?.desc || 'Every toughened sheet is tested for surface compression and break patterns to exceed BIS and ASTM safety standards.',
+            color: 'from-blue-600/10 to-transparent',
             iconColor: 'text-blue-600'
         },
-        { 
-            icon: IconRegistry[content.values?.[3]?.icon] || <FaCheckDouble />, 
-            title: content.values?.[3]?.title || 'Safety Engineering', 
-            desc: content.values?.[3]?.desc || 'Our lamination technology facilitates maximum protection against impact while maintaining 100% optical fidelity.', 
-            color: 'from-emerald-500/10 to-transparent', 
+        {
+            icon: IconRegistry[content.values?.[3]?.icon] || <FaCheckDouble />,
+            title: content.values?.[3]?.title || 'Safety Engineering',
+            desc: content.values?.[3]?.desc || 'Our lamination technology facilitates maximum protection against impact while maintaining 100% optical fidelity.',
+            color: 'from-emerald-500/10 to-transparent',
             iconColor: 'text-emerald-600'
         }
     ];
 
     return (
-        <motion.div 
+        <motion.div
             variants={pageTransition}
             initial="initial"
             animate="animate"
@@ -109,14 +109,14 @@ const AboutPage = () => {
             {/* Cinematic Hero Section */}
             <section className="relative min-h-[60vh] flex items-center pt-24 pb-12 overflow-hidden bg-slate-950">
                 <div ref={aboutHeroParallaxRef} className="absolute inset-0 z-0 opacity-40">
-                    <img 
+                    <img
                         src={pageHero.bgImage}
                         className="w-full h-full object-cover scale-110"
                         alt="Background"
                     />
                     <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-transparent to-slate-950"></div>
                 </div>
-                
+
                 {/* Tactical Grid Overlay */}
                 <div className="absolute inset-0 opacity-10 pointer-events-none z-[1]" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '40px 40px' }}></div>
 
@@ -139,7 +139,7 @@ const AboutPage = () => {
             <section className="py-12 relative overflow-hidden">
                 <div className="container mx-auto px-6 relative z-10">
                     <div className="grid lg:grid-cols-2 gap-10 items-center">
-                        <div 
+                        <div
                             ref={narrativeRef}
                             className="space-y-10"
                         >
@@ -164,27 +164,27 @@ const AboutPage = () => {
                                 </div>
                             </div>
                         </div>
-                        
-                        <div 
+
+                        <div
                             ref={narrativeImageRef}
                             className="relative"
                         >
                             <div className="aspect-[4/5] rounded-[4rem] bg-slate-100 overflow-hidden shadow-2xl relative group border border-slate-200">
-                                <img 
-                                    src={content.imageUrl || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1000"} 
-                                    alt="Facility" 
+                                <img
+                                    src={content.imageUrl || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1000"}
+                                    alt="Facility"
                                     className="w-full h-full object-cover transition-transform duration-2000 group-hover:scale-110 grayscale group-hover:grayscale-0"
                                 />
                                 <div className="absolute inset-0 bg-blue-600/5 mix-blend-overlay"></div>
                             </div>
                             <div className="absolute -bottom-12 -left-12 bg-white p-12 rounded-[3.5rem] shadow-2xl border border-slate-50 hidden md:flex flex-col items-center">
                                 <FaAward className="text-blue-600 text-6xl mb-4 animate-bounce" />
-                                <p className="font-black text-slate-900 uppercase tracking-widest text-[9px] text-center">Certified <br/> Industrial Grade</p>
+                                <p className="font-black text-slate-900 uppercase tracking-widest text-[9px] text-center">Certified <br /> Industrial Grade</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Background Decal */}
                 <div className="absolute top-1/2 right-0 -translate-y-1/2 text-[15vw] font-black text-slate-50 pointer-events-none select-none tracking-tighter uppercase whitespace-nowrap z-0">
                     Legacy 01
@@ -194,9 +194,9 @@ const AboutPage = () => {
             {/* Strategic Pillars */}
             <section className="py-16 bg-slate-950 text-white relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/5 blur-[150px] rounded-full"></div>
-                
+
                 <div className="container mx-auto px-6 relative z-10">
-                    <div 
+                    <div
                         ref={pillarsRef}
                         className="grid md:grid-cols-2 gap-12"
                     >
@@ -208,7 +208,7 @@ const AboutPage = () => {
                             <h3 className="text-3xl font-black mb-6 uppercase tracking-tighter text-white italic">{content.visionTitle}</h3>
                             <p className="text-lg text-slate-400 font-medium leading-relaxed uppercase tracking-wider opacity-80">{content.visionText}</p>
                         </div>
-                        
+
                         <div className="bg-white/5 backdrop-blur-3xl p-16 rounded-[4rem] border border-white/10 relative overflow-hidden group">
                             <div className="absolute top-0 right-0 p-10 text-white/5 font-black text-9xl group-hover:text-white/10 transition-colors select-none">M</div>
                             <div className="w-20 h-20 bg-white rounded-[2rem] flex items-center justify-center text-3xl mb-10 shadow-2xl shadow-white/5 group-hover:rotate-[-10deg] transition-all duration-700">
@@ -228,13 +228,13 @@ const AboutPage = () => {
                         <div className="inline-block bg-blue-50 text-blue-600 px-6 py-2 rounded-full text-[9px] font-black uppercase tracking-[0.5em] mb-6">Execution Standards</div>
                         <h2 className="text-3xl md:text-5xl font-black text-slate-950 uppercase tracking-tighter italic">Foundational <span className="text-blue-600 italic-none">Protocols.</span></h2>
                     </div>
-                    
-                    <div 
+
+                    <div
                         ref={protocolsGridRef}
                         className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
                         {values.map((v, i) => (
-                            <div 
+                            <div
                                 key={i}
                                 className={`p-10 rounded-[3.5rem] bg-gradient-to-br ${v.color} border border-slate-100 group transition-all duration-700 hover:border-blue-500/20`}
                             >
@@ -252,10 +252,10 @@ const AboutPage = () => {
             {/* Cinematic Conclusion */}
             <section className="py-20 bg-white relative flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 opacity-5 grayscale pointer-events-none">
-                     <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover" alt="Industrial" />
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19480c5?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover" alt="Industrial" />
                 </div>
                 <div className="container mx-auto px-6 text-center relative z-10">
-                    <h2 
+                    <h2
                         ref={quoteRef}
                         className="text-3xl md:text-5xl lg:text-6xl font-black text-slate-950 uppercase tracking-tighter leading-none max-w-6xl mx-auto italic"
                     >

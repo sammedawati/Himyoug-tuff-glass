@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import { collection, addDoc, deleteDoc, doc, onSnapshot, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlus, FaTrash, FaEdit, FaSave, FaTimes, FaSearch, FaFilter, FaBox, FaLayerGroup, FaImage, FaTools, FaDatabase, FaShieldAlt, FaTemperatureHigh, FaVial, FaBuilding, FaCogs, FaChevronRight, FaArrowLeft } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaEdit, FaSave, FaTimes, FaSearch, FaBox, FaLayerGroup, FaImage, FaTools, FaDatabase, FaShieldAlt, FaTemperatureHigh, FaVial, FaBuilding, FaCogs, FaChevronRight, FaArrowLeft } from 'react-icons/fa';
 import { dummyProducts } from '../../utils/dummyData';
 
 const ProductManager = () => {
@@ -19,7 +19,7 @@ const ProductManager = () => {
         specs: '',
         parentType: ''
     });
-    
+
     // Filter State
     const [searchTerm, setSearchTerm] = useState('');
     const [loading, setLoading] = useState(false);
@@ -124,7 +124,7 @@ const ProductManager = () => {
     };
 
     const seedProducts = async () => {
-        if(window.confirm('Import structural reference assets?')) {
+        if (window.confirm('Import structural reference assets?')) {
             setLoading(true);
             try {
                 const promises = dummyProducts.map(p => addDoc(collection(db, 'products'), { ...p, createdAt: serverTimestamp() }));
@@ -142,11 +142,11 @@ const ProductManager = () => {
     const getCount = (catId) => products.filter(p => (p.parentType || '').toLowerCase() === catId.toLowerCase() || (p.category || '').toLowerCase().includes(catId.toLowerCase())).length;
 
     const filteredProducts = products.filter(p => {
-        const matchesSearch = p.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                            p.description?.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = !selectedAdminCategory || 
-                                (p.parentType || '').toLowerCase() === selectedAdminCategory.id.toLowerCase() || 
-                                (p.category || '').toLowerCase().includes(selectedAdminCategory.id.toLowerCase());
+        const matchesSearch = p.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            p.description?.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = !selectedAdminCategory ||
+            (p.parentType || '').toLowerCase() === selectedAdminCategory.id.toLowerCase() ||
+            (p.category || '').toLowerCase().includes(selectedAdminCategory.id.toLowerCase());
         return matchesSearch && matchesCategory;
     });
 
@@ -162,34 +162,33 @@ const ProductManager = () => {
                         {adminView === 'nexus' ? 'Main Portfolio Index' : `${selectedAdminCategory?.name} Registry`}
                     </h2>
                 </div>
-                
+
                 <div className="flex gap-4">
-                    <button 
+                    <button
                         onClick={() => setEditCategories(!editCategories)}
-                        className={`px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-3 border ${
-                            editCategories 
-                                ? 'bg-slate-900 text-cyan-400 border-slate-900' 
+                        className={`px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all flex items-center gap-3 border ${editCategories
+                                ? 'bg-slate-900 text-cyan-400 border-slate-900'
                                 : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'
-                        }`}
+                            }`}
                     >
                         <FaLayerGroup /> {editCategories ? 'Close Categories' : 'Manage Categories'}
                     </button>
                     {adminView === 'registry' && (
-                        <button 
+                        <button
                             onClick={() => { setAdminView('nexus'); setSelectedAdminCategory(null); }}
                             className="px-6 py-3 bg-slate-100 text-slate-900 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-200 transition-all flex items-center gap-3 border border-slate-200"
                         >
                             <FaArrowLeft className="text-slate-400" /> Back to Nexus
                         </button>
                     )}
-                    <button 
+                    <button
                         onClick={seedProducts}
                         className="px-6 py-3 bg-white text-slate-500 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center gap-3 border border-slate-200"
                     >
                         <FaDatabase className="text-slate-300" /> Demo Sync
                     </button>
-                    <button 
-                        onClick={() => { setIsEditing(true); if(!selectedAdminCategory) setFormData({...formData, category: 'General'}); }}
+                    <button
+                        onClick={() => { setIsEditing(true); if (!selectedAdminCategory) setFormData({ ...formData, category: 'General' }); }}
                         className="px-8 py-3 bg-brand-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-brand-700 transition-all flex items-center gap-3 shadow-xl shadow-brand-600/20"
                     >
                         <FaPlus /> Index New Asset
@@ -205,7 +204,7 @@ const ProductManager = () => {
 
             <AnimatePresence mode="wait">
                 {editCategories ? (
-                    <motion.div 
+                    <motion.div
                         key="cat-manager"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -219,9 +218,9 @@ const ProductManager = () => {
                                         <div className="w-10 h-10 bg-slate-50 text-brand-600 rounded-xl flex items-center justify-center border border-slate-100">
                                             <CategoryIcon iconName={cat.icon} />
                                         </div>
-                                        <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest">CAT_NODE_{idx+1}</span>
+                                        <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest">CAT_NODE_{idx + 1}</span>
                                     </div>
-                                    <input 
+                                    <input
                                         className="w-full bg-slate-50 border-none p-3 rounded-xl font-black text-xs uppercase"
                                         value={cat.name}
                                         onChange={e => {
@@ -231,7 +230,7 @@ const ProductManager = () => {
                                         }}
                                         placeholder="Category Name"
                                     />
-                                    <textarea 
+                                    <textarea
                                         className="w-full bg-slate-50 border-none p-3 rounded-xl font-medium text-[10px] h-16 resize-none"
                                         value={cat.desc}
                                         onChange={e => {
@@ -241,7 +240,7 @@ const ProductManager = () => {
                                         }}
                                         placeholder="Description..."
                                     />
-                                    <input 
+                                    <input
                                         className="w-full bg-slate-50 border-none p-3 rounded-xl font-bold text-[8px] text-blue-500"
                                         value={cat.image}
                                         onChange={e => {
@@ -261,7 +260,7 @@ const ProductManager = () => {
                         </div>
                     </motion.div>
                 ) : isEditing ? (
-                    <motion.div 
+                    <motion.div
                         key="edit-form"
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -288,24 +287,24 @@ const ProductManager = () => {
                                 <div className="space-y-8">
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Asset Designation</label>
-                                        <input 
-                                            className="w-full bg-slate-50 border-2 border-slate-50 p-5 rounded-3xl font-black text-lg text-slate-950 focus:bg-white focus:border-brand-500 outline-none transition-all shadow-inner" 
-                                            value={formData.name || formData.title} 
-                                            onChange={e => setFormData({...formData, name: e.target.value, title: e.target.value})} 
+                                        <input
+                                            className="w-full bg-slate-50 border-2 border-slate-50 p-5 rounded-3xl font-black text-lg text-slate-950 focus:bg-white focus:border-brand-500 outline-none transition-all shadow-inner"
+                                            value={formData.name || formData.title}
+                                            onChange={e => setFormData({ ...formData, name: e.target.value, title: e.target.value })}
                                             placeholder="e.g. V7-Industrial Tempered"
-                                            required 
+                                            required
                                         />
                                     </div>
 
                                     {!selectedAdminCategory && (
                                         <div className="space-y-3">
                                             <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Master Category Mapping</label>
-                                            <select 
+                                            <select
                                                 className="w-full bg-slate-50 border-2 border-slate-50 p-5 rounded-3xl font-black text-xs text-slate-950 focus:bg-white focus:border-brand-500 outline-none transition-all appearance-none cursor-pointer"
                                                 value={formData.parentType || formData.category}
                                                 onChange={e => {
                                                     const selected = categories.find(c => c.name === e.target.value);
-                                                    setFormData({...formData, parentType: selected ? selected.id : '', category: e.target.value});
+                                                    setFormData({ ...formData, parentType: selected ? selected.id : '', category: e.target.value });
                                                 }}
                                             >
                                                 <option value="">Select Master Node</option>
@@ -318,12 +317,12 @@ const ProductManager = () => {
                                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Digital Asset (Image URL)</label>
                                         <div className="relative group">
                                             <FaImage className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-brand-600 transition-colors" />
-                                            <input 
-                                                className="w-full bg-slate-50 border-2 border-slate-50 p-5 pl-14 rounded-3xl font-bold text-[10px] text-brand-600 focus:bg-white focus:border-brand-500 outline-none transition-all" 
+                                            <input
+                                                className="w-full bg-slate-50 border-2 border-slate-50 p-5 pl-14 rounded-3xl font-bold text-[10px] text-brand-600 focus:bg-white focus:border-brand-500 outline-none transition-all"
                                                 type="url"
                                                 placeholder="Enter full HTTPS image source..."
-                                                value={formData.imageUrl} 
-                                                onChange={e => setFormData({...formData, imageUrl: e.target.value})} 
+                                                value={formData.imageUrl}
+                                                onChange={e => setFormData({ ...formData, imageUrl: e.target.value })}
                                             />
                                         </div>
                                     </div>
@@ -332,34 +331,34 @@ const ProductManager = () => {
                                 <div className="space-y-8">
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Infrastructure Narrative (Description)</label>
-                                        <textarea 
-                                            className="w-full bg-slate-50 border-2 border-slate-50 p-6 rounded-3xl font-medium text-xs text-slate-600 focus:bg-white focus:border-brand-500 outline-none transition-all h-36 resize-none shadow-inner leading-relaxed" 
-                                            value={formData.description} 
-                                            onChange={e => setFormData({...formData, description: e.target.value})} 
+                                        <textarea
+                                            className="w-full bg-slate-50 border-2 border-slate-50 p-6 rounded-3xl font-medium text-xs text-slate-600 focus:bg-white focus:border-brand-500 outline-none transition-all h-36 resize-none shadow-inner leading-relaxed"
+                                            value={formData.description}
+                                            onChange={e => setFormData({ ...formData, description: e.target.value })}
                                             placeholder="Supporting structural glass technical details..."
                                         />
                                     </div>
 
                                     <div className="space-y-3">
                                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Performance Standards (Specs)</label>
-                                        <input 
-                                            className="w-full bg-slate-50 border-2 border-slate-50 p-5 rounded-3xl font-bold text-xs text-slate-950 focus:bg-white focus:border-brand-500 outline-none transition-all shadow-inner" 
+                                        <input
+                                            className="w-full bg-slate-50 border-2 border-slate-50 p-5 rounded-3xl font-bold text-xs text-slate-950 focus:bg-white focus:border-brand-500 outline-none transition-all shadow-inner"
                                             placeholder="e.g. 12mm thick, V2-Calibration"
-                                            value={formData.specs} 
-                                            onChange={e => setFormData({...formData, specs: e.target.value})} 
+                                            value={formData.specs}
+                                            onChange={e => setFormData({ ...formData, specs: e.target.value })}
                                         />
                                     </div>
 
                                     <div className="flex gap-6 pt-6">
-                                        <button 
-                                            type="submit" 
+                                        <button
+                                            type="submit"
                                             disabled={loading}
                                             className="flex-[2] bg-slate-950 text-white p-6 rounded-3xl font-black uppercase tracking-[0.3em] text-[10px] flex items-center justify-center gap-4 hover:bg-black transition-all shadow-2xl disabled:opacity-50"
                                         >
                                             <FaSave className="text-cyan-400" /> Commit to Node
                                         </button>
-                                        <button 
-                                            type="button" 
+                                        <button
+                                            type="button"
                                             onClick={closeForm}
                                             className="flex-1 bg-slate-100 text-slate-500 p-6 rounded-3xl font-black uppercase tracking-widest text-[10px] hover:bg-slate-200 transition-all"
                                         >
@@ -371,7 +370,7 @@ const ProductManager = () => {
                         </div>
                     </motion.div>
                 ) : adminView === 'nexus' ? (
-                    <motion.div 
+                    <motion.div
                         key="admin-nexus"
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -387,13 +386,13 @@ const ProductManager = () => {
                             >
                                 <img src={item.image} className="absolute inset-0 w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" alt={item.name} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent group-hover:from-slate-950/80 transition-all"></div>
-                                
+
                                 <div className="absolute inset-0 p-10 flex flex-col justify-end">
                                     <div className="w-14 h-14 bg-brand-600 text-white rounded-2xl flex items-center justify-center text-2xl mb-6 shadow-2xl shadow-brand-600/30">
                                         <CategoryIcon iconName={item.icon} />
                                     </div>
                                     <h3 className="text-3xl font-black text-white uppercase tracking-tighter italic mb-2">{item.name}</h3>
-                                    
+
                                     <div className="flex items-center justify-between pt-4 border-t border-white/10">
                                         <div className="flex flex-col">
                                             <span className="text-[12px] font-black text-brand-400 uppercase tracking-widest">{getCount(item.id)} Assets</span>
@@ -408,7 +407,7 @@ const ProductManager = () => {
                         ))}
                     </motion.div>
                 ) : (
-                    <motion.div 
+                    <motion.div
                         key="admin-registry"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -418,8 +417,8 @@ const ProductManager = () => {
                         <div className="bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm flex items-center gap-6">
                             <div className="relative flex-grow group">
                                 <FaSearch className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-brand-600 transition-colors" />
-                                <input 
-                                    className="w-full bg-slate-50 border-2 border-slate-50 p-4 pl-16 rounded-2xl font-black text-xs text-slate-950 focus:bg-white focus:border-brand-500 outline-none transition-all shadow-inner" 
+                                <input
+                                    className="w-full bg-slate-50 border-2 border-slate-50 p-4 pl-16 rounded-2xl font-black text-xs text-slate-950 focus:bg-white focus:border-brand-500 outline-none transition-all shadow-inner"
                                     placeholder={`Search within ${selectedAdminCategory?.name} registry...`}
                                     value={searchTerm}
                                     onChange={e => setSearchTerm(e.target.value)}
@@ -433,7 +432,7 @@ const ProductManager = () => {
                         {/* Product Grid (Admin) */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
                             {filteredProducts.map((product) => (
-                                <motion.div 
+                                <motion.div
                                     key={product.id}
                                     layout
                                     className="group relative aspect-[4/5] rounded-[2.5rem] overflow-hidden bg-slate-100 border border-slate-100 shadow-xl"
@@ -442,15 +441,15 @@ const ProductManager = () => {
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent group-hover:from-slate-950 transition-all duration-700 p-8 flex flex-col justify-end">
                                         <div className="text-[8px] font-black text-brand-400 uppercase tracking-widest mb-2 opacity-60">ID: {product.id.slice(-6)}</div>
                                         <h4 className="text-xl font-black text-white uppercase tracking-tighter italic mb-6 leading-none">{product.name || product.title}</h4>
-                                        
+
                                         <div className="flex gap-3 mt-4">
-                                            <button 
+                                            <button
                                                 onClick={() => openEdit(product)}
                                                 className="flex-1 bg-white/10 backdrop-blur-md text-white py-3 rounded-xl text-[9px] font-black uppercase tracking-widest flex items-center justify-center gap-2 hover:bg-brand-600 transition-all border border-white/10"
                                             >
                                                 <FaEdit /> Edit
                                             </button>
-                                            <button 
+                                            <button
                                                 onClick={() => handleDelete(product.id)}
                                                 className="bg-rose-500/20 backdrop-blur-md text-rose-500 w-12 h-12 rounded-xl flex items-center justify-center hover:bg-rose-600 hover:text-white transition-all border border-rose-500/30"
                                             >

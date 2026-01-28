@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
-import { doc, getDoc, setDoc, serverTimestamp, collection, onSnapshot, addDoc, deleteDoc, getDocs } from 'firebase/firestore';
-import { FaSave, FaPlus, FaTrash, FaCheckCircle, FaChartBar, FaQuoteLeft, FaInfoCircle, FaStar, FaDatabase, FaHandshake } from 'react-icons/fa';
+import { doc, setDoc, serverTimestamp, collection, onSnapshot, addDoc, deleteDoc, getDocs } from 'firebase/firestore';
+import { FaSave, FaPlus, FaTrash, FaCheckCircle, FaChartBar, FaQuoteLeft, FaStar, FaDatabase, FaHandshake } from 'react-icons/fa';
 import { homeFeatures as dummyFeatures, homeStats as dummyStats, homeShowcase as dummyShowcase, dummyTestimonials, dummyClients } from '../../utils/dummyData';
 
 const HomeManager = () => {
@@ -130,16 +130,16 @@ const HomeManager = () => {
     };
 
     const seedHomeData = async () => {
-        if(window.confirm('Seed home page with industrial glass dummy data? This will overwrite current live modules.')) {
+        if (window.confirm('Seed home page with industrial glass dummy data? This will overwrite current live modules.')) {
             setLoading(true);
             try {
                 await setDoc(doc(db, 'site_content', 'home_features'), { items: dummyFeatures, updatedAt: serverTimestamp() });
                 await setDoc(doc(db, 'site_content', 'home_stats'), { items: dummyStats, updatedAt: serverTimestamp() });
-                await setDoc(doc(db, 'site_content', 'home_showcase'), { 
-                    badge: 'Premium Showcase', 
-                    title: 'Elite Glass Collection.', 
-                    items: dummyShowcase, 
-                    updatedAt: serverTimestamp() 
+                await setDoc(doc(db, 'site_content', 'home_showcase'), {
+                    badge: 'Premium Showcase',
+                    title: 'Elite Glass Collection.',
+                    items: dummyShowcase,
+                    updatedAt: serverTimestamp()
                 });
 
                 // Seed Testimonials if empty
@@ -184,15 +184,14 @@ const HomeManager = () => {
                     </div>
                 </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <button 
-                    onClick={() => setActiveSection('features')} 
-                    className={`p-6 rounded-[1.5rem] border-2 text-left transition-all group relative overflow-hidden ${
-                        activeSection === 'features' 
-                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl' 
+                <button
+                    onClick={() => setActiveSection('features')}
+                    className={`p-6 rounded-[1.5rem] border-2 text-left transition-all group relative overflow-hidden ${activeSection === 'features'
+                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl'
                             : 'bg-white border-slate-100 hover:border-blue-500/30 hover:shadow-lg'
-                    }`}
+                        }`}
                 >
                     <div className="relative z-10 flex flex-col h-full justify-between">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors ${activeSection === 'features' ? 'bg-white/10 text-brand-400' : 'bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white'}`}>
@@ -205,13 +204,12 @@ const HomeManager = () => {
                     </div>
                 </button>
 
-                <button 
-                    onClick={() => setActiveSection('stats')} 
-                    className={`p-6 rounded-[1.5rem] border-2 text-left transition-all group relative overflow-hidden ${
-                        activeSection === 'stats' 
-                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl' 
+                <button
+                    onClick={() => setActiveSection('stats')}
+                    className={`p-6 rounded-[1.5rem] border-2 text-left transition-all group relative overflow-hidden ${activeSection === 'stats'
+                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl'
                             : 'bg-white border-slate-100 hover:border-blue-500/30 hover:shadow-lg'
-                    }`}
+                        }`}
                 >
                     <div className="relative z-10 flex flex-col h-full justify-between">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors ${activeSection === 'stats' ? 'bg-white/10 text-brand-400' : 'bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white'}`}>
@@ -224,13 +222,12 @@ const HomeManager = () => {
                     </div>
                 </button>
 
-                <button 
-                    onClick={() => setActiveSection('showcase')} 
-                    className={`p-6 rounded-[1.5rem] border-2 text-left transition-all group relative overflow-hidden ${
-                        activeSection === 'showcase' 
-                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl' 
+                <button
+                    onClick={() => setActiveSection('showcase')}
+                    className={`p-6 rounded-[1.5rem] border-2 text-left transition-all group relative overflow-hidden ${activeSection === 'showcase'
+                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl'
                             : 'bg-white border-slate-100 hover:border-blue-500/30 hover:shadow-lg'
-                    }`}
+                        }`}
                 >
                     <div className="relative z-10 flex flex-col h-full justify-between">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 transition-colors ${activeSection === 'showcase' ? 'bg-white/10 text-brand-400' : 'bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white'}`}>
@@ -245,13 +242,12 @@ const HomeManager = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4 mb-12">
-                <button 
-                    onClick={() => setActiveSection('testimonials')} 
-                    className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 group ${
-                        activeSection === 'testimonials' 
-                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl' 
+                <button
+                    onClick={() => setActiveSection('testimonials')}
+                    className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 group ${activeSection === 'testimonials'
+                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl'
                             : 'bg-white border-slate-100 hover:border-blue-500/30 hover:shadow-md'
-                    }`}
+                        }`}
                 >
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${activeSection === 'testimonials' ? 'bg-white/10 text-brand-400' : 'bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white'}`}>
                         <FaQuoteLeft className="text-xs" />
@@ -259,13 +255,12 @@ const HomeManager = () => {
                     <span className={`font-black uppercase tracking-widest text-[10px] ${activeSection === 'testimonials' ? 'text-white' : 'text-slate-600'}`}>Stakeholder Feedback</span>
                 </button>
 
-                <button 
-                    onClick={() => setActiveSection('clients')} 
-                    className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 group ${
-                        activeSection === 'clients' 
-                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl' 
+                <button
+                    onClick={() => setActiveSection('clients')}
+                    className={`p-4 rounded-xl border-2 text-left transition-all flex items-center gap-4 group ${activeSection === 'clients'
+                            ? 'bg-slate-900 border-slate-900 text-white shadow-xl'
                             : 'bg-white border-slate-100 hover:border-blue-500/30 hover:shadow-md'
-                    }`}
+                        }`}
                 >
                     <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${activeSection === 'clients' ? 'bg-white/10 text-brand-400' : 'bg-slate-50 text-slate-400 group-hover:bg-blue-600 group-hover:text-white'}`}>
                         <FaHandshake className="text-xs" />
@@ -287,15 +282,15 @@ const HomeManager = () => {
                                             <FaCheckCircle className="text-base" />
                                         </div>
                                         <div>
-                                            <h3 className="text-[10px] font-black uppercase text-slate-900 tracking-[0.2em]">Node 0{i+1}</h3>
+                                            <h3 className="text-[10px] font-black uppercase text-slate-900 tracking-[0.2em]">Node 0{i + 1}</h3>
                                             <span className="text-[7px] font-bold text-slate-400 tracking-widest uppercase">Operational</span>
                                         </div>
                                     </div>
-                                    <span className="text-[8px] font-black text-slate-200">SPEC_ID_0{i+1}</span>
+                                    <span className="text-[8px] font-black text-slate-200">SPEC_ID_0{i + 1}</span>
                                 </div>
                                 <div className="space-y-3 relative z-10">
-                                    <input 
-                                        className="w-full bg-slate-50 border border-transparent p-3 rounded-xl font-bold text-xs text-slate-900 focus:bg-white focus:border-blue-500 outline-none transition-all" 
+                                    <input
+                                        className="w-full bg-slate-50 border border-transparent p-3 rounded-xl font-bold text-xs text-slate-900 focus:bg-white focus:border-blue-500 outline-none transition-all"
                                         placeholder="Component Title"
                                         value={features[i]?.title || ''}
                                         onChange={e => {
@@ -304,8 +299,8 @@ const HomeManager = () => {
                                             setFeatures(n);
                                         }}
                                     />
-                                    <textarea 
-                                        className="w-full bg-slate-50 border border-transparent p-3 rounded-xl font-medium text-xs text-slate-600 focus:bg-white focus:border-blue-500 outline-none transition-all min-h-[80px]" 
+                                    <textarea
+                                        className="w-full bg-slate-50 border border-transparent p-3 rounded-xl font-medium text-xs text-slate-600 focus:bg-white focus:border-blue-500 outline-none transition-all min-h-[80px]"
                                         placeholder="Industrial advantage..."
                                         value={features[i]?.desc || ''}
                                         onChange={e => {
@@ -335,13 +330,13 @@ const HomeManager = () => {
                                     <div className="w-8 h-8 bg-slate-100 text-slate-500 rounded-lg flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-colors">
                                         <FaChartBar size={14} />
                                     </div>
-                                    <h5 className="text-[9px] font-black uppercase tracking-widest text-slate-400">Stat Node 0{i+1}</h5>
+                                    <h5 className="text-[9px] font-black uppercase tracking-widest text-slate-400">Stat Node 0{i + 1}</h5>
                                 </div>
                                 <div className="space-y-3">
                                     <div className="space-y-1">
                                         <label className="block text-[8px] font-black uppercase tracking-widest text-slate-400 ml-1">Metric Value</label>
-                                        <input 
-                                            className="w-full bg-slate-50 border border-transparent p-3 rounded-xl font-black text-center text-xl text-slate-900 focus:bg-white focus:border-slate-900 outline-none transition-all" 
+                                        <input
+                                            className="w-full bg-slate-50 border border-transparent p-3 rounded-xl font-black text-center text-xl text-slate-900 focus:bg-white focus:border-slate-900 outline-none transition-all"
                                             placeholder="Value"
                                             value={stats.items?.[i]?.value || ''}
                                             onChange={e => {
@@ -353,8 +348,8 @@ const HomeManager = () => {
                                     </div>
                                     <div className="space-y-1">
                                         <label className="block text-[8px] font-black uppercase tracking-widest text-slate-400 ml-1">Label</label>
-                                        <input 
-                                            className="w-full bg-slate-50 border border-transparent p-3 rounded-xl font-bold text-center text-[10px] uppercase tracking-widest text-slate-600 focus:bg-white focus:border-slate-900 outline-none transition-all" 
+                                        <input
+                                            className="w-full bg-slate-50 border border-transparent p-3 rounded-xl font-bold text-center text-[10px] uppercase tracking-widest text-slate-600 focus:bg-white focus:border-slate-900 outline-none transition-all"
                                             placeholder="Label"
                                             value={stats.items?.[i]?.label || ''}
                                             onChange={e => {
@@ -391,8 +386,8 @@ const HomeManager = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <label className="block text-[8px] font-black uppercase tracking-[0.4em] text-slate-400 pl-2">Section Badge</label>
-                                    <input 
-                                        className="w-full bg-slate-50 border border-transparent p-4 rounded-xl font-bold text-xs focus:border-blue-500 focus:bg-white outline-none transition-all" 
+                                    <input
+                                        className="w-full bg-slate-50 border border-transparent p-4 rounded-xl font-bold text-xs focus:border-blue-500 focus:bg-white outline-none transition-all"
                                         placeholder="Upper Identification Text"
                                         value={showcase.badge}
                                         onChange={e => setShowcase({ ...showcase, badge: e.target.value })}
@@ -400,8 +395,8 @@ const HomeManager = () => {
                                 </div>
                                 <div className="space-y-2">
                                     <label className="block text-[8px] font-black uppercase tracking-[0.4em] text-slate-400 pl-2">Headline Title</label>
-                                    <input 
-                                        className="w-full bg-slate-50 border border-transparent p-4 rounded-xl font-bold text-xs focus:border-blue-500 focus:bg-white outline-none transition-all" 
+                                    <input
+                                        className="w-full bg-slate-50 border border-transparent p-4 rounded-xl font-bold text-xs focus:border-blue-500 focus:bg-white outline-none transition-all"
                                         placeholder="Primary Section Title"
                                         value={showcase.title}
                                         onChange={e => setShowcase({ ...showcase, title: e.target.value })}
@@ -417,18 +412,18 @@ const HomeManager = () => {
                                     </h5>
                                     <span className="text-[8px] font-bold text-slate-400 tracking-widest uppercase italic">{showcase.items?.length || 0} Nodes</span>
                                 </div>
-                                
+
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <input id="sc-url" className="w-full bg-white border border-slate-100 p-3 rounded-xl text-[10px] font-bold outline-none focus:border-blue-500 transition-all" placeholder="Media URL" />
                                     <input id="sc-title" className="w-full bg-white border border-slate-100 p-3 rounded-xl text-[10px] font-bold outline-none focus:border-blue-500 transition-all" placeholder="Display Title" />
                                     <div className="flex gap-2">
                                         <input id="sc-cat" className="w-full bg-white border border-slate-100 p-3 rounded-xl text-[10px] font-bold outline-none focus:border-blue-500 transition-all" placeholder="Category" />
-                                        <button 
+                                        <button
                                             onClick={() => {
                                                 const url = document.getElementById('sc-url').value;
                                                 const title = document.getElementById('sc-title').value;
                                                 const cat = document.getElementById('sc-cat').value;
-                                                if(url) {
+                                                if (url) {
                                                     const newItem = { url, title, category: cat || 'Premium' };
                                                     setShowcase(prev => ({ ...prev, items: [...(prev.items || []), newItem] }));
                                                     document.getElementById('sc-url').value = '';
@@ -446,7 +441,7 @@ const HomeManager = () => {
                                 <div className="pt-4 border-t border-slate-100">
                                     <h5 className="text-[8px] font-black uppercase tracking-[0.3em] text-slate-400 mb-3">Or Pick from Active Inventory</h5>
                                     <div className="flex gap-2">
-                                        <select 
+                                        <select
                                             value={selectedAsset}
                                             onChange={(e) => setSelectedAsset(e.target.value)}
                                             className="flex-1 bg-white border border-slate-200 p-3 rounded-xl text-[10px] font-bold outline-none focus:border-blue-500"
@@ -456,15 +451,15 @@ const HomeManager = () => {
                                                 <option key={p.id} value={p.id}>{p.name} ({p.category})</option>
                                             ))}
                                         </select>
-                                        <button 
+                                        <button
                                             onClick={() => {
                                                 const prod = inventory.find(p => p.id === selectedAsset);
-                                                if(prod) {
-                                                    const newItem = { 
-                                                        url: prod.imageUrl, 
-                                                        title: prod.name, 
+                                                if (prod) {
+                                                    const newItem = {
+                                                        url: prod.imageUrl,
+                                                        title: prod.name,
                                                         category: prod.category,
-                                                        desc: prod.description 
+                                                        desc: prod.description
                                                     };
                                                     setShowcase(prev => ({ ...prev, items: [...(prev.items || []), newItem] }));
                                                     setSelectedAsset('');
@@ -482,7 +477,7 @@ const HomeManager = () => {
                                         <div key={idx} className="relative group aspect-square rounded-xl overflow-hidden border border-slate-200">
                                             <img src={item.url} className="w-full h-full object-cover" alt="" />
                                             <div className="absolute inset-0 bg-blue-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center p-2 text-center pointer-events-none">
-                                                <button 
+                                                <button
                                                     onClick={(e) => {
                                                         e.stopPropagation();
                                                         const next = [...showcase.items];
@@ -517,7 +512,7 @@ const HomeManager = () => {
                                 <div className="w-1.5 h-1.5 bg-blue-600 rounded-full shadow-[0_0_12px_rgba(59,130,246,0.3)] animate-pulse"></div>
                                 <h3 className="text-slate-900 font-black uppercase tracking-[0.3em] text-[10px]">New Strategic Feedback Deployment</h3>
                             </div>
-                            
+
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <TestimonialInput label="Stakeholder Entity" name="name" placeholder="Full Name / Company" required />
                                 <TestimonialInput label="Executive Role" name="role" placeholder="Project Director" required />
@@ -527,7 +522,7 @@ const HomeManager = () => {
                                     <textarea name="content" required className="w-full bg-slate-50 border border-slate-100 p-4 rounded-xl text-xs font-medium outline-none focus:border-blue-500 focus:bg-white transition-all placeholder:text-slate-400 min-h-[100px]" placeholder="Architectural engagement feedback..." />
                                 </div>
                             </div>
-                            
+
                             <div className="mt-8">
                                 <button type="submit" className="bg-blue-600 text-white px-10 py-4 rounded-xl font-black uppercase tracking-[0.2em] text-[10px] hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center gap-2">
                                     <FaPlus /> Deploy Feedback Node
@@ -535,7 +530,7 @@ const HomeManager = () => {
                             </div>
                         </div>
                     </form>
- 
+
                     <div className="space-y-6">
                         <div className="flex items-center gap-2 mb-4">
                             <div className="w-1 h-8 bg-blue-600 rounded-full"></div>
@@ -549,7 +544,7 @@ const HomeManager = () => {
                                         <h4 className="font-black text-slate-900 uppercase tracking-tight text-sm truncate leading-none">{t.name}</h4>
                                         <p className="text-[9px] font-black text-blue-600 uppercase tracking-[0.2em] mt-1 truncate">{t.role}</p>
                                         <div className="mt-2 flex items-center gap-0.5">
-                                            {[1,2,3,4,5].map(star => <div key={star} className="w-1 h-1 bg-blue-500 rounded-full"></div>)}
+                                            {[1, 2, 3, 4, 5].map(star => <div key={star} className="w-1 h-1 bg-blue-500 rounded-full"></div>)}
                                         </div>
                                     </div>
                                     <button onClick={() => handleDeleteTestimonial(t.id)} className="text-slate-300 hover:text-red-500 transition-all p-2 hover:bg-red-50 rounded-lg">
@@ -564,7 +559,7 @@ const HomeManager = () => {
 
             {activeSection === 'clients' && (
                 <div className="space-y-12">
-                     <form onSubmit={handleAddClient} className="bg-white p-10 rounded-[3rem] border-2 border-slate-100 shadow-xl relative overflow-hidden">
+                    <form onSubmit={handleAddClient} className="bg-white p-10 rounded-[3rem] border-2 border-slate-100 shadow-xl relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
                         <div className="relative z-10">
                             <div className="flex items-center gap-3 mb-10">

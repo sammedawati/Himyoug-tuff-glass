@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import { collection, onSnapshot, doc } from 'firebase/firestore';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaIndustry, FaCogs, FaTools, FaCheckCircle, FaRobot, FaMicrochip, FaShieldAlt, FaAtom, FaDiceD6, FaFingerprint } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaIndustry, FaCogs, FaRobot, FaMicrochip, FaShieldAlt, FaAtom, FaFingerprint } from 'react-icons/fa';
 import { useFadeIn, useStaggerFadeIn, useParallax } from '../../hooks/useGsap';
 import { pageTransition } from '../../utils/animations';
 
@@ -28,9 +28,9 @@ const FacilitiesPage = () => {
         });
 
         const unsubscribePage = onSnapshot(doc(db, 'page_content', 'facilities'), (doc) => {
-          if (doc.exists()) {
-            setPageContent(prev => ({ ...prev, ...doc.data() }));
-          }
+            if (doc.exists()) {
+                setPageContent(prev => ({ ...prev, ...doc.data() }));
+            }
         });
 
         const unsubscribeTech = onSnapshot(doc(db, 'site_content', 'facilities'), (doc) => {
@@ -63,19 +63,19 @@ const FacilitiesPage = () => {
 
 
     return (
-        <motion.div 
+        <motion.div
             variants={pageTransition}
             initial="initial"
             animate="animate"
             exit="exit"
             className="min-h-screen bg-white"
-         >
+        >
             {/* Massive Cinematic Hero */}
             <section className="relative min-h-[60vh] flex items-center pt-24 pb-12 bg-slate-950 overflow-hidden">
                 <div ref={facilitiesParallaxRef} className="absolute inset-0 z-0 opacity-40 grayscale">
-                    <img 
-                        src={pageContent.bgImage} 
-                        alt="Infrastructure" 
+                    <img
+                        src={pageContent.bgImage}
+                        alt="Infrastructure"
                         className="w-full h-full object-cover scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-slate-950/40"></div>
@@ -92,7 +92,7 @@ const FacilitiesPage = () => {
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[0.9] uppercase tracking-tighter mb-4 sm:mb-6 md:mb-8 italic px-2">
                             {pageContent.title}
                         </h1>
-                        
+
                         <p className="text-sm sm:text-base md:text-lg text-white/40 font-medium leading-relaxed max-w-lg sm:max-w-xl md:max-w-2xl mx-auto opacity-80 uppercase tracking-[0.2em] sm:tracking-[0.3em] md:tracking-[0.4em] px-4">
                             {pageContent.subtitle}
                         </p>
@@ -127,7 +127,7 @@ const FacilitiesPage = () => {
             {/* Infrastructure Modules - Technical Registry Grid */}
             <section className="py-16 bg-white relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-                
+
                 <div className="container mx-auto px-6">
                     {loading ? (
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
@@ -138,24 +138,24 @@ const FacilitiesPage = () => {
                     ) : (
                         <div ref={facilitiesGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {facilities.map((fac, index) => (
-                                <div 
+                                <div
                                     key={fac.id}
                                     className="group flex flex-col bg-slate-50/50 rounded-[3rem] p-4 border border-slate-100 hover:bg-white hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] transition-all duration-500"
                                 >
                                     {/* Asset Media Node - Compact */}
                                     <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden bg-slate-950 mb-6">
                                         {fac.imageUrl ? (
-                                            <img 
-                                                src={fac.imageUrl} 
-                                                alt={fac.title} 
-                                                className="w-full h-full object-cover transition-all duration-1000 grayscale group-hover:grayscale-0 group-hover:scale-110" 
+                                            <img
+                                                src={fac.imageUrl}
+                                                alt={fac.title}
+                                                className="w-full h-full object-cover transition-all duration-1000 grayscale group-hover:grayscale-0 group-hover:scale-110"
                                             />
                                         ) : (
                                             <div className="w-full h-full flex items-center justify-center">
                                                 <FaIndustry className="text-white/5 text-7xl" />
                                             </div>
                                         )}
-                                        
+
                                         {/* Counter Badge - Compact */}
                                         <div className="absolute top-6 left-6 w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20">
                                             <span className="text-xs font-black text-white italic">0{index + 1}</span>
@@ -167,14 +167,14 @@ const FacilitiesPage = () => {
                                             <span className="text-[7px] font-black text-white uppercase tracking-widest">Active</span>
                                         </div>
                                     </div>
-                                    
+
                                     {/* Detailed Narrative Section - Scaled Down */}
                                     <div className="px-4 pb-6 space-y-6">
                                         <div className="flex items-center gap-4">
                                             <div className="h-[2px] w-8 bg-brand-600"></div>
                                             <span className="text-brand-600 font-black uppercase tracking-[0.4em] text-[8px]">Node Registry</span>
                                         </div>
-                                        
+
                                         <div>
                                             <h2 className="text-2xl font-black text-slate-950 uppercase tracking-tighter italic leading-tight mb-2">
                                                 {fac.title}

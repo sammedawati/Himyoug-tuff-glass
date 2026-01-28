@@ -3,7 +3,7 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaClock } from 'reac
 import { db } from '../../services/firebase';
 import { collection, addDoc, serverTimestamp, doc, onSnapshot } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { fadeInUp, staggerContainer, pageTransition } from '../../utils/animations';
+import { pageTransition } from '../../utils/animations';
 import { useFadeIn, useStaggerFadeIn, useParallax } from '../../hooks/useGsap';
 
 const ContactPage = () => {
@@ -66,9 +66,9 @@ const ContactPage = () => {
     setStatus('submitting');
     try {
       await addDoc(collection(db, 'inquiries'), {
-          ...formData,
-          type: 'general_inquiry',
-          createdAt: serverTimestamp()
+        ...formData,
+        type: 'general_inquiry',
+        createdAt: serverTimestamp()
       });
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
@@ -79,7 +79,7 @@ const ContactPage = () => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       variants={pageTransition}
       initial="initial"
       animate="animate"
@@ -89,9 +89,9 @@ const ContactPage = () => {
       {/* Cinematic Contact Hero - Centered Nexus style */}
       <section className="relative min-h-[60vh] flex items-center pt-24 pb-12 overflow-hidden">
         <div ref={contactParallaxRef} className="absolute inset-0 z-0 opacity-30">
-          <img 
-            src={pageContent.bgImage} 
-            alt="Contact" 
+          <img
+            src={pageContent.bgImage}
+            alt="Contact"
             className="w-full h-full object-cover scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/40 to-slate-950"></div>
@@ -99,17 +99,17 @@ const ContactPage = () => {
 
         <div className="container mx-auto px-6 relative z-10">
           <div ref={contactHeroRef} className="max-w-4xl mx-auto text-center">
-            <div 
+            <div
               className="bg-cyan-500 text-white px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.5em] inline-block mb-6 shadow-lg shadow-cyan-500/20"
             >
               Commercial Presence
             </div>
-            <h1 
+            <h1
               className="text-4xl md:text-6xl font-black text-white leading-[1.1] uppercase tracking-tighter mb-4 whitespace-pre-line"
             >
               {pageContent.title}
             </h1>
-            <p 
+            <p
               className="text-lg md:text-xl text-gray-300 font-medium leading-relaxed max-w-2xl mx-auto"
             >
               {pageContent.subtitle}
@@ -121,9 +121,9 @@ const ContactPage = () => {
       <section className="relative py-12 bg-slate-900 overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
+
             {/* Contact Details - Transmission Console */}
-            <div 
+            <div
               ref={contactConsoleRef}
               className="lg:col-span-5 space-y-10"
             >
@@ -134,20 +134,20 @@ const ContactPage = () => {
                 </div>
 
                 <div className="space-y-6">
-                  <ContactInfoItem 
-                    icon={<FaMapMarkerAlt />} 
-                    title="Industrial Headquarters" 
-                    desc={contactDetails.hqAddress} 
+                  <ContactInfoItem
+                    icon={<FaMapMarkerAlt />}
+                    title="Industrial Headquarters"
+                    desc={contactDetails.hqAddress}
                   />
-                  <ContactInfoItem 
-                    icon={<FaPhone />} 
-                    title="Commercial Hotline" 
+                  <ContactInfoItem
+                    icon={<FaPhone />}
+                    title="Commercial Hotline"
                     desc={contactDetails.hotline}
-                    sub={contactDetails.hotlineHours} 
+                    sub={contactDetails.hotlineHours}
                   />
-                  <ContactInfoItem 
-                    icon={<FaEnvelope />} 
-                    title="Data Pipeline" 
+                  <ContactInfoItem
+                    icon={<FaEnvelope />}
+                    title="Data Pipeline"
                     desc={contactDetails.emailPrimary}
                     sub={contactDetails.emailSecondary}
                   />
@@ -155,24 +155,24 @@ const ContactPage = () => {
 
                 <div className="mt-12 bg-white/5 p-6 rounded-[2rem] flex items-center gap-4 border border-white/5">
                   <div className="w-12 h-12 bg-indigo-500 text-white rounded-xl flex items-center justify-center text-2xl flex-shrink-0 shadow-[0_0_20px_rgba(99,102,241,0.2)]">
-                      <FaClock />
+                    <FaClock />
                   </div>
                   <div>
-                      <h4 className="font-black text-white uppercase tracking-widest text-[8px] mb-1">{contactDetails.latencyLabel}</h4>
-                      <p className="text-cyan-400 font-bold text-xs">{contactDetails.latencyValue}</p>
+                    <h4 className="font-black text-white uppercase tracking-widest text-[8px] mb-1">{contactDetails.latencyLabel}</h4>
+                    <p className="text-cyan-400 font-bold text-xs">{contactDetails.latencyValue}</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Contact Form - Engagement Interface */}
-            <div 
+            <div
               ref={engagementFormRef}
               className="lg:col-span-7"
             >
               <div className="bg-slate-900 p-6 md:p-8 rounded-[2rem] border border-white/10 shadow-[0_40px_100px_rgba(0,0,0,0.4)] relative overflow-hidden group">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 rounded-full blur-[100px] -mr-32 -mt-32 transition-all duration-1000 group-hover:bg-brand-500/20"></div>
-                
+
                 <div className="relative z-10">
                   <div className="mb-8">
                     <div className="flex items-center gap-3 mb-4">
@@ -181,48 +181,48 @@ const ContactPage = () => {
                     </div>
                     <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Initialize <span className="text-cyan-500 focus:text-cyan-400 transition-colors">Inquiry.</span></h2>
                   </div>
-                  
+
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <FormInput 
-                            label="Contractor Name" 
-                            name="name" 
-                            value={formData.name} 
-                            onChange={handleChange} 
-                            placeholder="Full Name / Entity" 
-                            required 
-                        />
-                        <FormInput 
-                            label="Digital Proxy" 
-                            name="email" 
-                            type="email" 
-                            value={formData.email} 
-                            onChange={handleChange} 
-                            placeholder="official@company.com" 
-                            required 
-                        />
+                      <FormInput
+                        label="Contractor Name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Full Name / Entity"
+                        required
+                      />
+                      <FormInput
+                        label="Digital Proxy"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="official@company.com"
+                        required
+                      />
                     </div>
 
-                    <FormInput 
-                        label="Mobile ID" 
-                        name="phone" 
-                        type="tel" 
-                        value={formData.phone} 
-                        onChange={handleChange} 
-                        placeholder="+91 XXXX XXX XXX" 
+                    <FormInput
+                      label="Mobile ID"
+                      name="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="+91 XXXX XXX XXX"
                     />
 
                     <div className="space-y-3">
-                        <label className="text-[9px] font-black uppercase tracking-[0.4em] text-cyan-500 pl-2">Technical Payload</label>
-                        <textarea
-                          name="message"
-                          value={formData.message}
-                          onChange={handleChange}
-                          required
-                          rows="5"
-                          className="w-full bg-slate-950/40 border border-white/10 rounded-[1.5rem] px-6 py-4 text-white focus:border-cyan-500 outline-none transition-all font-medium placeholder:text-slate-600 focus:bg-slate-950/60 text-sm shadow-inner"
-                          placeholder="Detail your thermodynamic or structural glass requirements..."
-                        ></textarea>
+                      <label className="text-[9px] font-black uppercase tracking-[0.4em] text-cyan-500 pl-2">Technical Payload</label>
+                      <textarea
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        required
+                        rows="5"
+                        className="w-full bg-slate-950/40 border border-white/10 rounded-[1.5rem] px-6 py-4 text-white focus:border-cyan-500 outline-none transition-all font-medium placeholder:text-slate-600 focus:bg-slate-950/60 text-sm shadow-inner"
+                        placeholder="Detail your thermodynamic or structural glass requirements..."
+                      ></textarea>
                     </div>
 
                     <button
@@ -230,12 +230,12 @@ const ContactPage = () => {
                       disabled={status === 'submitting'}
                       className="w-full bg-gradient-to-br from-cyan-500 via-cyan-600 to-indigo-700 text-white font-black py-4 rounded-[1.5rem] shadow-[0_20px_40px_rgba(6,182,212,0.4)] hover:shadow-[0_25px_50px_rgba(6,182,212,0.5)] hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-4 disabled:opacity-50 uppercase tracking-[0.3em] text-[10px] border border-cyan-400/30"
                     >
-                       {status === 'submitting' ? 'UPLOADING...' : 'DISPATCH PROTOCOL'} <FaPaperPlane className={status === 'submitting' ? 'animate-bounce text-lg' : 'text-lg'} />
+                      {status === 'submitting' ? 'UPLOADING...' : 'DISPATCH PROTOCOL'} <FaPaperPlane className={status === 'submitting' ? 'animate-bounce text-lg' : 'text-lg'} />
                     </button>
 
                     <AnimatePresence>
                       {status === 'success' && (
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
@@ -252,28 +252,28 @@ const ContactPage = () => {
           </div>
 
           {/* Industrial Map Integration */}
-          <div 
-              ref={mapRef}
-              className="mt-10 h-[250px] bg-slate-900 rounded-[2rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/10 relative group"
+          <div
+            ref={mapRef}
+            className="mt-10 h-[250px] bg-slate-900 rounded-[2rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/10 relative group"
           >
-             <div className="absolute inset-0 bg-cyan-500/10 pointer-events-none z-10 mix-blend-overlay opacity-50"></div>
-             <iframe 
-              src={contactDetails.mapIframe} 
-              width="100%" 
-              height="100%" 
-              style={{ border: 0 }} 
-              allowFullScreen="" 
+            <div className="absolute inset-0 bg-cyan-500/10 pointer-events-none z-10 mix-blend-overlay opacity-50"></div>
+            <iframe
+              src={contactDetails.mapIframe}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen=""
               loading="lazy"
               title="Industrial Command Center Location"
               className="grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-60 group-hover:opacity-100"
-             ></iframe>
-             <div className="absolute top-10 right-10 z-20 bg-slate-950/80 backdrop-blur-xl border border-white/10 p-6 rounded-3xl shadow-2xl">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></div>
-                  <span className="text-white font-black uppercase text-[10px] tracking-widest">Live Asset Trace</span>
-                </div>
-                <p className="text-slate-400 font-bold text-xs">Sector 12, HQ Pipeline 01</p>
-             </div>
+            ></iframe>
+            <div className="absolute top-10 right-10 z-20 bg-slate-950/80 backdrop-blur-xl border border-white/10 p-6 rounded-3xl shadow-2xl">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></div>
+                <span className="text-white font-black uppercase text-[10px] tracking-widest">Live Asset Trace</span>
+              </div>
+              <p className="text-slate-400 font-bold text-xs">Sector 12, HQ Pipeline 01</p>
+            </div>
           </div>
         </div>
       </section>
@@ -282,31 +282,31 @@ const ContactPage = () => {
 };
 
 const ContactInfoItem = ({ icon, title, desc, sub }) => (
-    <div className="flex items-start gap-5 group">
-        <div className="w-12 h-12 bg-white/5 text-cyan-500 rounded-2xl flex items-center justify-center text-xl flex-shrink-0 border border-white/5 transition-all duration-500 group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] group-hover:scale-110">
-            {icon}
-        </div>
-        <div>
-            <h3 className="font-black text-slate-500 uppercase tracking-[0.3em] text-[8px] mb-1 group-hover:text-cyan-400 transition-colors">{title}</h3>
-            <p className="text-lg font-black text-white tracking-tighter leading-tight mb-1 uppercase">{desc}</p>
-            {sub && <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">{sub}</p>}
-        </div>
+  <div className="flex items-start gap-5 group">
+    <div className="w-12 h-12 bg-white/5 text-cyan-500 rounded-2xl flex items-center justify-center text-xl flex-shrink-0 border border-white/5 transition-all duration-500 group-hover:bg-cyan-500 group-hover:text-white group-hover:shadow-[0_0_30px_rgba(6,182,212,0.3)] group-hover:scale-110">
+      {icon}
     </div>
+    <div>
+      <h3 className="font-black text-slate-500 uppercase tracking-[0.3em] text-[8px] mb-1 group-hover:text-cyan-400 transition-colors">{title}</h3>
+      <p className="text-lg font-black text-white tracking-tighter leading-tight mb-1 uppercase">{desc}</p>
+      {sub && <p className="text-slate-400 font-bold text-[10px] uppercase tracking-widest">{sub}</p>}
+    </div>
+  </div>
 );
 
 const FormInput = ({ label, name, type = "text", value, onChange, placeholder, required }) => (
-    <div className="space-y-2">
-        <label className="text-[9px] font-black uppercase tracking-[0.4em] text-cyan-500 pl-2">{label}</label>
-        <input
-            type={type}
-            name={name}
-            value={value}
-            onChange={onChange}
-            required={required}
-            className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3 text-white focus:border-cyan-500 outline-none transition-all font-bold text-sm placeholder:text-slate-600 focus:bg-white/10"
-            placeholder={placeholder}
-        />
-    </div>
+  <div className="space-y-2">
+    <label className="text-[9px] font-black uppercase tracking-[0.4em] text-cyan-500 pl-2">{label}</label>
+    <input
+      type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="w-full bg-white/5 border border-white/10 rounded-xl px-5 py-3 text-white focus:border-cyan-500 outline-none transition-all font-bold text-sm placeholder:text-slate-600 focus:bg-white/10"
+      placeholder={placeholder}
+    />
+  </div>
 );
 
 export default ContactPage;

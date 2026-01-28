@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import { collection, addDoc, deleteDoc, updateDoc, doc, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlus, FaTrash, FaDatabase, FaTools, FaIndustry, FaWarehouse, FaMicrochip } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaDatabase, FaTools, FaWarehouse, FaMicrochip } from 'react-icons/fa';
 import { dummyFacilities } from '../../utils/dummyData';
 
 const FacilitiesManager = () => {
@@ -19,9 +19,9 @@ const FacilitiesManager = () => {
     const [editTech, setEditTech] = useState(false);
 
     const seedData = async () => {
-        if(window.confirm('Add sample facilities?')) {
-             const promises = dummyFacilities.map(f => addDoc(collection(db, 'facilities'), { ...f, createdAt: serverTimestamp() }));
-             await Promise.all(promises);
+        if (window.confirm('Add sample facilities?')) {
+            const promises = dummyFacilities.map(f => addDoc(collection(db, 'facilities'), { ...f, createdAt: serverTimestamp() }));
+            await Promise.all(promises);
         }
     };
 
@@ -54,7 +54,7 @@ const FacilitiesManager = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!formData.title) return;
+        if (!formData.title) return;
         setLoading(true);
         try {
             await addDoc(collection(db, 'facilities'), {
@@ -72,7 +72,7 @@ const FacilitiesManager = () => {
     };
 
     const handleDelete = async (id) => {
-        if(window.confirm('Delete facility?')) {
+        if (window.confirm('Delete facility?')) {
             await deleteDoc(doc(db, 'facilities', id));
         }
     };
@@ -90,17 +90,16 @@ const FacilitiesManager = () => {
                             {msg}
                         </motion.div>
                     )}
-                    <button 
+                    <button
                         onClick={() => setEditTech(!editTech)}
-                        className={`px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 border ${
-                            editTech 
-                                ? 'bg-slate-900 text-cyan-400 border-slate-900 shadow-xl' 
+                        className={`px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 border ${editTech
+                                ? 'bg-slate-900 text-cyan-400 border-slate-900 shadow-xl'
                                 : 'bg-white text-slate-500 border-slate-200 hover:bg-slate-50'
-                        }`}
+                            }`}
                     >
                         <FaMicrochip /> {editTech ? 'Close Tech Nodes' : 'Manage Tech Highlights'}
                     </button>
-                    <button 
+                    <button
                         onClick={() => setShowModal(true)}
                         className="flex-1 md:flex-initial px-6 py-2 bg-blue-600 text-white rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 active:scale-95 border border-blue-500"
                     >
@@ -114,7 +113,7 @@ const FacilitiesManager = () => {
 
             <AnimatePresence mode="wait">
                 {editTech ? (
-                    <motion.div 
+                    <motion.div
                         key="tech-editor"
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
@@ -123,18 +122,18 @@ const FacilitiesManager = () => {
                     >
                         {techNodes.map((node, idx) => (
                             <div key={idx} className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-                                <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest">Highlight 0{idx+1}</span>
-                                <input 
-                                    className="w-full bg-white border-none p-2 rounded-lg font-black text-[10px] uppercase text-slate-900" 
-                                    value={node.title} 
+                                <span className="text-[7px] font-black text-slate-400 uppercase tracking-widest">Highlight 0{idx + 1}</span>
+                                <input
+                                    className="w-full bg-white border-none p-2 rounded-lg font-black text-[10px] uppercase text-slate-900"
+                                    value={node.title}
                                     onChange={e => {
                                         const n = [...techNodes];
                                         n[idx] = { ...n[idx], title: e.target.value };
                                         setTechNodes(n);
                                     }}
                                 />
-                                <textarea 
-                                    className="w-full bg-white border-none p-2 rounded-lg font-medium text-[9px] h-16 resize-none" 
+                                <textarea
+                                    className="w-full bg-white border-none p-2 rounded-lg font-medium text-[9px] h-16 resize-none"
                                     value={node.desc}
                                     onChange={e => {
                                         const n = [...techNodes];
@@ -156,9 +155,9 @@ const FacilitiesManager = () => {
             {/* Asset Staging Area */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-2 pb-20">
                 {facilities.map(item => (
-                    <motion.div 
+                    <motion.div
                         layout
-                        key={item.id} 
+                        key={item.id}
                         className="p-6 bg-white rounded-[2rem] border border-gray-100 flex flex-col items-start relative group hover:border-blue-500/30 transition-all shadow-sm overflow-hidden"
                     >
                         <div className="absolute top-0 right-0 p-4 z-10">
@@ -193,7 +192,7 @@ const FacilitiesManager = () => {
             <AnimatePresence>
                 {showModal && (
                     <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 overflow-hidden">
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
@@ -201,7 +200,7 @@ const FacilitiesManager = () => {
                             className="absolute inset-0 bg-slate-950/80 backdrop-blur-md"
                         ></motion.div>
 
-                        <motion.div 
+                        <motion.div
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -212,7 +211,7 @@ const FacilitiesManager = () => {
                                     <div className="flex items-center gap-3 text-cyan-400/60 font-black text-[10px] uppercase tracking-[0.4em]">
                                         <FaTools size={12} /> Unit Deployment Module
                                     </div>
-                                    <button 
+                                    <button
                                         type="button"
                                         onClick={() => setShowModal(false)}
                                         className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white/40 hover:text-white transition-all"
@@ -220,50 +219,50 @@ const FacilitiesManager = () => {
                                         <FaPlus className="rotate-45" />
                                     </button>
                                 </div>
-                                
+
                                 <div className="space-y-6">
                                     <div className="space-y-2">
                                         <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-1">Facility Designation</label>
-                                        <input 
-                                            className="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl font-bold text-sm text-white focus:border-cyan-500 outline-none transition-all shadow-inner" 
+                                        <input
+                                            className="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl font-bold text-sm text-white focus:border-cyan-500 outline-none transition-all shadow-inner"
                                             placeholder="e.g. Tempering Furnace XT-500"
                                             value={formData.title}
-                                            onChange={e => setFormData({...formData, title: e.target.value})}
+                                            onChange={e => setFormData({ ...formData, title: e.target.value })}
                                             required
                                             autoFocus
                                         />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-1">Asset Asset URL (Image)</label>
-                                        <input 
-                                            className="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl font-bold text-[10px] text-cyan-400 focus:border-cyan-500 outline-none transition-all shadow-inner" 
+                                        <input
+                                            className="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl font-bold text-[10px] text-cyan-400 focus:border-cyan-500 outline-none transition-all shadow-inner"
                                             placeholder="https://..."
                                             value={formData.imageUrl}
-                                            onChange={e => setFormData({...formData, imageUrl: e.target.value})}
+                                            onChange={e => setFormData({ ...formData, imageUrl: e.target.value })}
                                         />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-[9px] font-black uppercase tracking-widest text-slate-500 ml-1">Operational Summary</label>
-                                        <textarea 
-                                            className="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl font-medium text-xs text-slate-400 focus:border-cyan-500 outline-none transition-all h-32 resize-none shadow-inner" 
+                                        <textarea
+                                            className="w-full bg-slate-800 border border-slate-700 p-4 rounded-xl font-medium text-xs text-slate-400 focus:border-cyan-500 outline-none transition-all h-32 resize-none shadow-inner"
                                             placeholder="Describe machinery capacity or function..."
                                             value={formData.description}
-                                            onChange={e => setFormData({...formData, description: e.target.value})}
+                                            onChange={e => setFormData({ ...formData, description: e.target.value })}
                                         />
                                     </div>
                                 </div>
 
                                 <div className="pt-4 flex gap-4">
-                                    <button 
-                                        type="button" 
+                                    <button
+                                        type="button"
                                         onClick={() => setShowModal(false)}
                                         className="flex-1 bg-white/5 text-white/60 p-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[10px] hover:bg-white/10 transition-all active:scale-95"
                                     >
                                         Abort Deployment
                                     </button>
-                                    <button 
-                                        type="submit" 
-                                        disabled={loading} 
+                                    <button
+                                        type="submit"
+                                        disabled={loading}
                                         className="flex-[2] bg-blue-600 text-white p-5 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] flex items-center justify-center gap-3 hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 active:scale-95 disabled:opacity-50"
                                     >
                                         <FaPlus /> Deploy Asset Node

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import { collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaPlus, FaTrash, FaDatabase, FaCalendarAlt, FaMapMarkerAlt, FaBell, FaTools, FaFilter, FaSearch, FaTimes, FaGlobeAmericas, FaClock } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaDatabase, FaCalendarAlt, FaMapMarkerAlt, FaBell, FaFilter, FaSearch, FaTimes, FaGlobeAmericas, FaClock } from 'react-icons/fa';
 import { dummyEvents } from '../../utils/dummyData';
 
 const EventsManager = () => {

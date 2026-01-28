@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import { collection, onSnapshot, doc } from 'firebase/firestore';
 import { motion } from 'framer-motion';
-import {  pageTransition } from '../../utils/animations';
-import {  FaLayerGroup, FaCogs, FaChevronRight,  FaShieldAlt, FaTemperatureHigh, FaBuilding, FaVial, FaPencilRuler, FaProjectDiagram, FaTools, FaBox } from 'react-icons/fa';
+import { pageTransition } from '../../utils/animations';
+import { FaLayerGroup, FaCogs, FaChevronRight, FaShieldAlt, FaTemperatureHigh, FaBuilding, FaVial, FaProjectDiagram, FaTools, FaBox } from 'react-icons/fa';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFadeIn, useStaggerFadeIn, useParallax } from '../../hooks/useGsap';
 
@@ -13,8 +13,7 @@ const ProductsPage = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [searchQuery] = useState('');
     const [pageContent, setPageContent] = useState({
         title: 'Industrial Asset Registry',
         subtitle: 'Exploring high-performance structural glass solutions engineered for institutional excellence.',
@@ -31,7 +30,6 @@ const ProductsPage = () => {
     useEffect(() => {
         const unsubscribeProds = onSnapshot(collection(db, 'products'), (snapshot) => {
             setProducts(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-            setLoading(false); // Set loading to false once products are fetched
         });
 
         const unsubscribeCats = onSnapshot(doc(db, 'site_content', 'product_categories'), (doc) => {
@@ -79,19 +77,12 @@ const ProductsPage = () => {
         return icons[iconName] || <FaBox />;
     };
 
-    const filteredProducts = products.filter(product => {
-        const matchesCategory = selectedCategory === null || product.category === selectedCategory || (product.parentType && product.parentType === selectedCategory.toLowerCase());
-        const title = product.title || product.name || '';
-        const description = product.description || '';
-        const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                             description.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-    });
+
 
     if (urlCategory) {
         const decodedCat = decodeURIComponent(urlCategory);
         const currentCategory = categories.find(p => p.name.toLowerCase() === decodedCat.toLowerCase()) || { name: decodedCat, image: pageContent.bgImage, id: decodedCat.toLowerCase(), desc: 'No description available.' };
-        
+
         const categoryProducts = products.filter(p => {
             const searchKey = currentCategory.id.toLowerCase();
             const nameKey = currentCategory.name.toLowerCase().split(' ')[0];
@@ -99,15 +90,15 @@ const ProductsPage = () => {
             const pCat = (p.category || '').toLowerCase();
             const pParent = (p.parentType || '').toLowerCase();
 
-            return pCat.includes(searchKey) || 
-                   pName.includes(searchKey) || 
-                   pCat.includes(nameKey) || 
-                   pName.includes(nameKey) || 
-                   pParent === searchKey;
+            return pCat.includes(searchKey) ||
+                pName.includes(searchKey) ||
+                pCat.includes(nameKey) ||
+                pName.includes(nameKey) ||
+                pParent === searchKey;
         });
 
         return (
-            <motion.div 
+            <motion.div
                 variants={pageTransition}
                 initial="initial"
                 animate="animate"
@@ -120,9 +111,9 @@ const ProductsPage = () => {
                         <img src={currentCategory.image} className="w-full h-full object-cover scale-110" alt={currentCategory.name} />
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-slate-950/40"></div>
-                    
+
                     <div className="w-full relative z-10 flex flex-col items-center justify-center px-10 flex-grow pb-12">
-                        <button 
+                        <button
                             onClick={() => navigate('/products')}
                             className="absolute top-10 md:top-24 left-10 flex items-center gap-4 text-white hover:text-brand-400 transition-all uppercase text-[10px] font-black tracking-[0.4em] group"
                         >
@@ -130,7 +121,7 @@ const ProductsPage = () => {
                                 <FaChevronRight className="rotate-180 translate-x-[-1px]" />
                             </div> Portfolio Index
                         </button>
-                        
+
                         <div
                             ref={categoryHeaderRef}
                             className="text-center max-w-7xl mx-auto"
@@ -141,7 +132,7 @@ const ProductsPage = () => {
                             <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter italic leading-[0.8] mb-6 drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
                                 {currentCategory.name}
                             </h1>
-                            
+
                             <p className="text-white/40 text-sm md:text-base font-bold uppercase tracking-[0.3em] max-w-3xl mx-auto mb-8 leading-relaxed">
                                 {currentCategory.desc}
                             </p>
@@ -161,18 +152,18 @@ const ProductsPage = () => {
                 <section className="py-12 px-8">
                     <div ref={categoryGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
                         {categoryProducts.map((product, idx) => (
-                            <div 
+                            <div
                                 key={product.id}
                                 className="group"
                             >
                                 <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden bg-slate-100 mb-6 shadow-2xl transition-all duration-700 group-hover:-translate-y-4">
-                                    <img 
-                                        src={product.imageUrl} 
-                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000" 
-                                        alt={product.name} 
+                                    <img
+                                        src={product.imageUrl}
+                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
+                                        alt={product.name}
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8">
-                                        <button 
+                                        <button
                                             onClick={() => navigate('/quote')}
                                             className="bg-brand-600 text-white w-full py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-3 hover:bg-white hover:text-brand-600 transition-all"
                                         >
@@ -203,7 +194,7 @@ const ProductsPage = () => {
     }
 
     return (
-        <motion.div 
+        <motion.div
             variants={pageTransition}
             initial="initial"
             animate="animate"
@@ -213,8 +204,8 @@ const ProductsPage = () => {
             {/* Cinematic Hero Section */}
             <section className="relative min-h-[60vh] flex items-center pt-24 pb-12 bg-slate-950 overflow-hidden">
                 <div ref={registryParallaxRef} className="absolute inset-0 z-0">
-                    <img 
-                        src={pageContent.bgImage} 
+                    <img
+                        src={pageContent.bgImage}
                         className="w-full h-full object-cover grayscale opacity-35 scale-110"
                         alt="Hero"
                     />
@@ -246,22 +237,21 @@ const ProductsPage = () => {
                             <div
                                 key={item.id}
                                 onClick={() => navigate(`/products/${encodeURIComponent(item.name)}`)}
-                                className={`group relative h-[24rem] rounded-[3rem] overflow-hidden cursor-pointer border-[3px] transition-all duration-700 ${
-                                    urlCategory === item.name 
-                                    ? 'border-brand-600 shadow-[0_50px_100px_-20px_rgba(37,99,235,0.3)]' 
-                                    : 'border-white shadow-2xl hover:border-brand-600/30'
-                                }`}
+                                className={`group relative h-[24rem] rounded-[3rem] overflow-hidden cursor-pointer border-[3px] transition-all duration-700 ${urlCategory === item.name
+                                        ? 'border-brand-600 shadow-[0_50px_100px_-20px_rgba(37,99,235,0.3)]'
+                                        : 'border-white shadow-2xl hover:border-brand-600/30'
+                                    }`}
                             >
                                 <img src={item.image} className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000" alt={item.name} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent group-hover:from-brand-950/90 transition-all duration-700"></div>
-                                
+
                                 <div className="absolute inset-0 p-12 flex flex-col justify-end">
                                     <div className="w-16 h-16 bg-brand-600 text-white rounded-[1.5rem] flex items-center justify-center text-3xl mb-8 shadow-2xl shadow-brand-600/40 border border-brand-400/30">
                                         <CategoryIcon iconName={item.icon} /> {/* Used CategoryIcon */}
                                     </div>
                                     <h3 className="text-3xl font-black text-white uppercase tracking-tighter leading-none mb-4 italic">{item.name}</h3>
                                     <p className="text-white/60 text-[10px] font-bold uppercase tracking-[0.2em] mb-6 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500 max-w-[80%]">{item.desc}</p>
-                                    
+
                                     <div className="flex items-center justify-between pt-6 border-t border-white/10">
                                         <div className="flex flex-col">
                                             <span className="text-[10px] font-black text-brand-400 uppercase tracking-widest">{item.count}</span>

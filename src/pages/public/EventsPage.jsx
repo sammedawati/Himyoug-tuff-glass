@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../services/firebase';
 import { collection, onSnapshot, query, orderBy, doc } from 'firebase/firestore';
 import { motion } from 'framer-motion';
-import { fadeInUp, staggerContainer, pageTransition } from '../../utils/animations';
+import { pageTransition } from '../../utils/animations';
 import { FaCalendarAlt, FaMapMarkerAlt, FaNewspaper } from 'react-icons/fa';
-import { useFadeIn, useStaggerFadeIn, useParallax } from '../../hooks/useGsap';
+import { useStaggerFadeIn, useParallax } from '../../hooks/useGsap';
 
 const EventsPage = () => {
     const [events, setEvents] = useState([]);
@@ -27,9 +27,9 @@ const EventsPage = () => {
         }, () => setLoading(false));
 
         const unsubscribePage = onSnapshot(doc(db, 'page_content', 'events'), (doc) => {
-          if (doc.exists()) {
-            setPageContent(prev => ({ ...prev, ...doc.data() }));
-          }
+            if (doc.exists()) {
+                setPageContent(prev => ({ ...prev, ...doc.data() }));
+            }
         });
 
         return () => {
@@ -38,33 +38,10 @@ const EventsPage = () => {
         };
     }, []);
 
-    const trunkVariants = {
-        initial: { height: 0, opacity: 0 },
-        animate: { height: "100%", opacity: 1, transition: { duration: 2, ease: "easeInOut" } }
-    };
 
-    const cardLeftVariants = {
-        initial: { x: -100, opacity: 0, scale: 0.9 },
-        animate: { 
-            x: 0, 
-            opacity: 1, 
-            scale: 1,
-            transition: { duration: 0.8, ease: "easeOut" } 
-        }
-    };
-
-    const cardRightVariants = {
-        initial: { x: 100, opacity: 0, scale: 0.9 },
-        animate: { 
-            x: 0, 
-            opacity: 1, 
-            scale: 1,
-            transition: { duration: 0.8, ease: "easeOut" } 
-        }
-    };
 
     return (
-        <motion.div 
+        <motion.div
             variants={pageTransition}
             initial="initial"
             animate="animate"
@@ -73,28 +50,28 @@ const EventsPage = () => {
         >
             {/* Cinematic Events Hero - Centered Nexus style */}
             <section className="relative min-h-[60vh] flex items-center pt-24 pb-12 bg-slate-950 overflow-hidden">
-        <div ref={eventsHeroParallaxRef} className="absolute inset-0 z-0 opacity-30">
-          <img 
-            src={pageContent.bgImage} 
-            alt="Events" 
-            className="w-full h-full object-cover scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
-        </div>
+                <div ref={eventsHeroParallaxRef} className="absolute inset-0 z-0 opacity-30">
+                    <img
+                        src={pageContent.bgImage}
+                        alt="Events"
+                        className="w-full h-full object-cover scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                </div>
 
                 <div className="container mx-auto px-6 relative z-10">
                     <div ref={eventsHeaderRef} className="max-w-4xl mx-auto text-center">
-                        <div 
+                        <div
                             className="bg-cyan-500 text-white px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-[0.5em] inline-block mb-6 shadow-lg shadow-cyan-500/20"
                         >
                             Corporate Timeline
                         </div>
-                        <h1 
+                        <h1
                             className="text-4xl md:text-6xl font-black text-white leading-[1.1] uppercase tracking-tighter mb-4 whitespace-pre-line"
                         >
                             {pageContent.title}
                         </h1>
-                        <p 
+                        <p
                             className="text-lg md:text-xl text-gray-300 font-medium leading-relaxed max-w-2xl mx-auto"
                         >
                             {pageContent.subtitle}
@@ -113,7 +90,7 @@ const EventsPage = () => {
                             ))}
                         </div>
                     ) : events.length === 0 ? (
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             className="max-w-4xl mx-auto text-center py-40 bg-white rounded-[4rem] border border-dashed border-gray-200"
@@ -123,13 +100,13 @@ const EventsPage = () => {
                             <p className="text-gray-400 mt-4 font-medium uppercase text-[10px] tracking-widest">Awaiting new commercial intelligence feeds.</p>
                         </motion.div>
                     ) : (
-                        <div 
+                        <div
                             ref={eventsGridRef}
                             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                         >
                             {events.map((event, i) => (
-                                <div 
-                                    key={event.id} 
+                                <div
+                                    key={event.id}
                                     className="group relative bg-white rounded-[2.5rem] p-8 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-gray-100 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:border-brand-500/20"
                                 >
                                     {/* Technical Date Ribbon */}
@@ -162,11 +139,11 @@ const EventsPage = () => {
                                         {/* Footer Metadata */}
                                         <div className="pt-6 mt-4 border-t border-slate-50 flex items-center justify-between">
                                             <div className="flex items-center gap-2 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
-                                                <FaMapMarkerAlt className="text-brand-500" /> 
+                                                <FaMapMarkerAlt className="text-brand-500" />
                                                 {event.location}
                                             </div>
                                             <div className="flex items-center gap-2 text-slate-400 font-bold text-[10px] uppercase tracking-widest">
-                                                <FaCalendarAlt className="text-brand-500" /> 
+                                                <FaCalendarAlt className="text-brand-500" />
                                                 {new Date(event.date).getFullYear()}
                                             </div>
                                         </div>
